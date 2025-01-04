@@ -1,0 +1,103 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 150px;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    position: fixed;
+    height: 100vh;
+  }
+
+  .content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+  }
+
+  .sidebar h2 {
+    margin: 0 0 15px; /* Margin for heading */
+  }
+
+  .sidebar ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+  }
+
+  .sidebar ul li {
+    margin: 10px 0; /* Margin between list items */
+  }
+
+  .sidebar ul li a {
+    color: white; /* Link color */
+    text-decoration: none; /* Remove underline */
+    padding: 10px; /* Padding for links */
+    display: block; /* Make links block elements */
+    transition: background-color 0.3s; /* Smooth background color transition */
+  }
+
+  .sidebar ul li a:hover {
+    background-color: #575757; /* Change background on hover */
+  }
+
+  /* From Uiverse.io by satyamchaudharydev */ 
+.button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.button {
+  --primary-color: #111;
+  --hovered-color: #47aec8;
+  position: relative;
+  display: flex;
+  font-weight: 600;
+  font-size: 20px;
+  align-items: center;
+}
+
+.button {
+  margin: 0;
+  position: relative;
+  font-size: 20px;
+  color: var(--primary-color);
+}
+
+.button::after {
+  position: absolute;
+  content: "";
+  width: 0;
+  left: 0;
+  bottom: -7px;
+  background: var(--hovered-color);
+  height: 2px;
+  transition: 0.3s ease-out;
+}
+
+
+.button:hover::after {
+  width: 100%;
+}
+
+/* CHECK BOX */
+input[type="checkbox"] {
+  appearance: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #a4a2a2;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill='green'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+  background-color: #6cff79;
+}
+   
