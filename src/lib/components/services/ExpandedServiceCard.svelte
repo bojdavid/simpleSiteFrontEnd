@@ -1,6 +1,7 @@
 <script>
     let { service, onupdateService, ondeleteService} = $props();
-
+    let imagePreviewUrl = $state(service.image ? URL.createObjectURL(service.image) : '');
+    let files = $state(null);
   
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -10,10 +11,31 @@
             service: formData.get('serviceName'),
             description: formData.get('description'),
             isApproved: formData.get('isApproved') === 'on',
+            image: formData.get('image')
             
         };
         onupdateService(updatedService)
       
+    }
+
+    function handleImageChange() {
+        console.log('Files:', files); // Debug files
+        if (files?.[0]) {
+            const file = files[0];
+            // Update preview first
+            if (imagePreviewUrl) {
+                URL.revokeObjectURL(imagePreviewUrl);
+            }
+            imagePreviewUrl = URL.createObjectURL(file);
+            
+            // Update service through parent
+            onupdateService({
+                ...service,
+                image: file
+            });
+            
+            console.log('Updated with file:', file); // Debug update
+        }
     }
   
 </script>
@@ -28,15 +50,27 @@
                 </div>
             </div>
         </div>
-        <button class="image-button">Change Image</button>
-
-        <div class="image-container">
-            {#if service.image}
-                <img src={service.image} alt={service.service} />
-            {:else}
-                <div class="placeholder-image">Image</div>
-            {/if}
-        </div>
+        <label for="image-input" class="image-container">
+            
+                {#if service.image}
+                    <img 
+                        src={imagePreviewUrl}
+                        alt="Profile preview" 
+                        class="preview-image"
+                    />
+                {:else}
+                    <div class="placeholder-image">Image</div>
+                {/if}
+            
+        </label>
+            <input 
+                id="image-input"
+                name="image"
+                type="file"
+                accept="image/*"
+                onchange={handleImageChange}
+                class="hidden"
+            />
 
         <div class="content-container">
             <input class="title" type="text" value={service.service} name="serviceName"/>
@@ -91,6 +125,15 @@
         --transition-fast: all 0.2s ease;
     }
 
+    .hidden {
+        display: none;
+    }
+    .preview-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
     .service-card {
         background-color: var(--color-white);
         padding: var(--spacing-2xl);
@@ -121,25 +164,6 @@
         font-size: var(--spacing-sm);
         color: var(--color-gray-500);
         font-weight: 500;
-    }
-
-    .image-button {
-        background-color: var(--color-primary);
-        padding: var(--spacing-sm) var(--spacing-lg);
-        border-radius: var(--radius-md);
-        font-weight: 600;
-        font-size: var(--spacing-sm);
-        letter-spacing: 0.025em;
-        box-shadow: var(--shadow-primary);
-        color: var(--color-white);
-        border: none;
-        transition: var(--transition-base);
-    }
-
-    .image-button:hover {
-        background-color: var(--color-primary-dark);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-primary-hover);
     }
 
     .image-container {

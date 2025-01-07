@@ -1,9 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
+import { JWT_SECRET, ALGORITHM } from '$env/static/private';
 
 export async function load({ cookies }) {
     const token = cookies.get('jwt');
-    console.log(process.env.JWT_SECRET)
     
     // If no token exists, redirect to login
     if (!token) {
@@ -14,8 +14,8 @@ export async function load({ cookies }) {
         // Verify token
         jwt.verify(
             token, 
-            "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7",
-            { algorithms: ['HS256'] }
+            `${JWT_SECRET}`,
+            { algorithms: [`${ALGORITHM}`] }
         );
         
         // Token is valid, allow access to dashboard routes
@@ -23,7 +23,9 @@ export async function load({ cookies }) {
         
     } catch (error) {
         // Token is invalid or expired
+        console.error("JWT Verification failed from dashboard:", error.message)
         cookies.delete('jwt', { path: '/' });
         throw redirect(302, '/login');
     }
 }
+

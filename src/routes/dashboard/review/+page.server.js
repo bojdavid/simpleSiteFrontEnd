@@ -1,3 +1,6 @@
+import { PUBLIC_API_URL } from '$env/static/public';
+
+
 export const actions = {
     handleApproval: async ({ request, cookies }) => {
         const data = await request.formData();
@@ -7,7 +10,7 @@ export const actions = {
         const token = cookies.get('jwt'); // or whatever your cookie name is
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/v1/review/approve/${reviewId}`, {
+            const response = await fetch(`${PUBLIC_API_URL}review/approve/${reviewId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +39,7 @@ export const actions = {
         const token = cookies.get('jwt');
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/v1/review/${reviewId}`,{
+            const response = await fetch(`${PUBLIC_API_URL}review/${reviewId}`,{
                 method: 'DELETE',
                 headers:{
                     'Content-Type': 'application/json',

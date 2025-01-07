@@ -1,3 +1,6 @@
+import { PUBLIC_API_URL } from '$env/static/public';
+
+
 export const actions = {
     updateService : async ({ request, cookies}) =>{
         const data = await request.formData();
@@ -8,7 +11,7 @@ export const actions = {
         //fetch data using token bearer
         
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/v1/services/${data.get('_id')}`,{
+            const response = await fetch(`${PUBLIC_API_URL}services/${data.get('_id')}`,{
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,7 +41,7 @@ export const actions = {
         console.log(id)
 
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/v1/services/${id}`, {
+            const response = await fetch(`${PUBLIC_API_URL}services/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

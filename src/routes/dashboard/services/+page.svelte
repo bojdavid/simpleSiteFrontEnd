@@ -1,8 +1,11 @@
 <script lang="ts">
+  
   import { onMount } from 'svelte';
   import ServiceCard from '../../../lib/components/services/ServiceCard.svelte';
   import Tabs from '$lib/components/Tabs_.svelte';
   import Loader from '$lib/components/Loader.svelte';
+  import { PUBLIC_API_URL } from '$env/static/public';
+  
 
 let services = $state([]);
 let loading = $state(true)
@@ -11,11 +14,11 @@ let error = $state(null);
 // Get Services data
 const refreshServices = async () =>{
   loading = true
-    const res = await fetch("http://127.0.0.1:8000/api/v1/services")  
+    const res = await fetch(`${PUBLIC_API_URL}services`)  
 
     if ( !res.ok){
       throw new Error(`HTTP error! status: ${res.status}`);
-    }
+    } 
     services = await res.json()
 }
 
@@ -97,6 +100,11 @@ let activeTab = $state("All");
 function handleTabChange(item) {
   activeTab = item;
 }
+
+$effect(() => {
+    console.log('Services from parent:', services);
+});
+
 </script>
 
 <header>
@@ -107,6 +115,11 @@ function handleTabChange(item) {
 <div class="services-grid">
     {#if loading}
       <Loader />
+
+    {:else if error}
+      <div class="loader-container">
+        <h3>Error: {error.message}</h3>
+      </div>
     {:else}
         {#if activeTab === "All"}
           

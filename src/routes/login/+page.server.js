@@ -1,4 +1,6 @@
 // src/routes/protected/+page.server.js
+import { PUBLIC_API_URL } from '$env/static/public';
+import { JWT_SECRET, ALGORITHM } from '$env/static/private';
 import { redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 
@@ -19,10 +21,10 @@ export function load({ cookies }) {
             // Step 2: Verify token signature and expiration
             const verifiedToken = jwt.verify(
                 token,
-                process.env.JWT_SECRET,
-                { algorithms: ['HS256'] }
+                `${JWT_SECRET}`,
+                { algorithms: [`${ALGORITHM}`] }
             );
-            
+           
             // If verification succeeds, redirect to dashboard
             throw redirect(302, '/dashboard');
             
@@ -61,7 +63,7 @@ export const actions = {
 
         try {
             console.log(process.env.URL)
-            const response = await fetch('http://127.0.0.1:8000/api/v1/adminAuth/login/', {
+            const response = await fetch(`${PUBLIC_API_URL}adminAuth/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -72,16 +74,13 @@ export const actions = {
             const responseData = await response.json();
            
             if (response.ok) {
-                
-                
-                
                 // Set the JWT token as an HTTP-only cookie
                 cookies.set('jwt', responseData.access_token, {
                     path: '/',
                     httpOnly: true,
                     secure: process.env.NODE_ENV === 'production',
                     sameSite: 'strict',
-                    maxAge: 60 * 60 * 24 // 24 hours
+                    maxAge: 60 * 30 // 30 Min
                 });
                
                 // Redirect to the dashboard 

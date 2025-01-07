@@ -1,13 +1,62 @@
 <script>
-  let userName = "User";
-  let profilePicture = "";
+  import { PUBLIC_API_URL } from '$env/static/public';
+  import { stats, user } from '$lib/stores/stats';
+  import { get } from 'svelte/store'
+  import { onMount } from 'svelte';
   
-  let stats = {
-    reviews: { pending: 10, total: 33 },
-    services: { pending: 10, total: 33 },
-    projects: { pending: 10, total: 33 }
-  };
-</script>
+let {data} = $props()
+
+  user.set({
+      name: data.user.name,
+      email: data.user.sub,
+      profilePicture: "",
+      id: data.user.userId         
+  })
+
+  let userName = $user.name;
+  let profilePicture = "";
+
+
+  onMount(async () => {
+      try {
+            // Fetch once at parent level
+            const [servicesRes, reviewsRes] = await Promise.all([
+                fetch(`${PUBLIC_API_URL}services/`),
+                fetch(`${PUBLIC_API_URL}review/`)
+            ]);
+            // Check response status
+            if (!servicesRes.ok || !reviewsRes.ok) {
+                throw new Error(`HTTP error! status: ${servicesRes.status || reviewsRes.status}`);
+            }
+            
+            const services = await servicesRes.json();
+            const reviews = await reviewsRes.json();
+            
+            console.log("working----------------------")
+            // Return data instead of updating store
+            
+                stats.set({
+                    services: {
+                        total: services.length,
+                        pending: services.filter(s => !s.isApproved).length
+                    },
+                    reviews: {
+                        total: reviews.length,
+                        pending: reviews.filter(r => !r.isApproved).length
+                    }
+                })
+        } catch (error) {
+            console.error('Error loading dashboard:', error);
+            
+                stats.set({
+                    services: { total: 0, pending: 0 },
+                    reviews: { total: 0, pending: 0 }
+                })
+        } 
+    })
+
+console.log("Here--------",$stats)
+</script> 
 
 <div class="dashboard">
   <header class="welcome-section">
@@ -24,21 +73,23 @@
   <h2>Edit Your Sections</h2>
 
   <div class="stats-container">
-    {#each Object.entries(stats) as [category, data]}
-      <div class="stat-card">
-        <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
-        <div class="stat-numbers">
-          <div class="stat-box">
-            <span class="number">{data.pending}</span>
-            <span class="label">Pending</span>
-          </div>
-          <div class="stat-box">
-            <span class="number">{data.total}</span>
-            <span class="label">Total</span>
-          </div>
-        </div>
-      </div>
-    {/each}
+    {#if stats}
+        {#each Object.entries($stats) as [category, data]}
+            <div class="stat-card">
+                <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                <div class="stat-numbers">
+                    <div class="stat-box">
+                        <span class="number">{data.pending}</span>
+                        <span class="label">Pending</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="number">{data.total}</span>
+                        <span class="label">Total</span>
+                    </div>
+                </div>
+            </div>
+        {/each}
+    {/if}
   </div>
 </div>
 

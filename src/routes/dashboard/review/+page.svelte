@@ -4,6 +4,7 @@
   import Tabs_ from '../../../lib/components/Tabs_.svelte';
   import Loader from '$lib/components/loader.svelte';
   import { enhance } from '$app/forms';
+  import { PUBLIC_API_URL } from '$env/static/public';
  
 
 //getting data
@@ -26,7 +27,7 @@
 
 // Reusable function to fetch and update reviews
 const refreshReviews = async () => {
-    const url = "http://127.0.0.1:8000/api/v1/review/"; // should become an enviroment variable
+    const url = `${PUBLIC_API_URL}review/`; // should become an enviroment variable
     console.log("Should become an enviroment variable")
     const res = await fetch(url);
     if (!res.ok) {
@@ -129,7 +130,9 @@ function handleScroll() {
           </div>
         
         {:else if error}
-            <p>Error: {error.message}</p>
+        <div class="loader-container">
+            <h3>Error: {error.message}</h3>
+        </div>    
         
             {:else}
           {#if activeTab === 'All'}

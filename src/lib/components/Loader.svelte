@@ -1,63 +1,71 @@
 
-<div class="container">
-      <div class="item" style="--i:0;"></div>
-      <div class="item" style="--i:1;"></div>
-      <div class="item" style="--i:2;"></div>
-      <div class="item" style="--i:3;"></div>
-      <div class="item" style="--i:4;"></div>
-      <div class="item" style="--i:5;"></div>
-      <div class="item" style="--i:6;"></div>
-      <div class="item" style="--i:7;"></div>
-      <div class="item" style="--i:8;"></div>
-      <div class="item" style="--i:9;"></div>
-      <div class="item" style="--i:10;"></div>
-      <div class="item" style="--i:11;"></div>
-      <div class="item" style="--i:12;"></div>
-      <div class="item" style="--i:13;"></div>
-      <div class="item" style="--i:14;"></div>
-      <div class="item" style="--i:15;"></div>
-      <div class="item" style="--i:16;"></div>
-      <div class="item" style="--i:17;"></div>
-      <div class="item" style="--i:18;"></div>
-      <div class="item" style="--i:19;"></div>
-      <div class="item" style="--i:20;"></div>
+<div class="loader">
+    <p class="heading">Getting Your Data</p>
+    <div class="loading">
+      <div class="load"></div>
+      <div class="load"></div>
+      <div class="load"></div>
+      <div class="load"></div>
     </div>
+  </div>
+
 
 <style>
-    /* From Uiverse.io by NlghtM4re */ 
-.container {
-  position: absolute;
-  top: 40%;
-  height: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.item {
-  position: absolute;
-  background-color: transparent;
-  width: calc(var(--i) * 2.5vmin);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: .9vmin solid rgb(0, 200, 255);
-  transform-style: preserve-3d;
-  transform: rotateX(70deg) translateZ(50px);
-  animation: my-move 3s ease-in-out calc(var(--i) * 0.08s) infinite;
-  box-shadow: 0px 0px 15px rgb(124, 124, 124),
-    inset 0px 0px 15px rgb(124, 124, 124);
-}
-
-@keyframes my-move {
-  0%,
-  100% {
-    transform: rotateX(70deg) translateZ(50px) translateY(0px);
-    filter: hue-rotate(0deg);
-  }
-
-  50% {
-    transform: rotateX(70deg) translateZ(50px) translateY(-50vmin);
-    filter: hue-rotate(180deg);
-  }
-}
-</style>
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .heading {
+      color: black;
+      letter-spacing: 0.2em;
+      margin-bottom: 1em;
+    }
+    
+    .loading {
+      display: flex;
+      width: 5em;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .load {
+      width: 23px;
+      height: 3px;
+      background-color: limegreen;
+      animation: 1s move_5011 infinite;
+      border-radius: 5px;
+      margin: 0.1em;
+    }
+    
+    .load:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+    
+    .load:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+    
+    .load:nth-child(3) {
+      animation-delay: 0.6s;
+    }
+    
+    @keyframes move_5011 {
+      0% {
+        width: 0.2em;
+      }
+    
+      25% {
+        width: 0.7em;
+      }
+    
+      50% {
+        width: 1.5em;
+      }
+    
+      100% {
+        width: 0.2em;
+      }
+    }</style>
