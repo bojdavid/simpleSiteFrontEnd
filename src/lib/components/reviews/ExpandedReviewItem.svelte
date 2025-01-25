@@ -1,8 +1,41 @@
 <script>
 import StarRating from "../StarRating.svelte";
+import { getModalStore } from '@skeletonlabs/skeleton';
+import MinorLoader from "../Minor_loader.svelte";
 
-let {review, onApprovalToggle, onDeleteMessage, onMessage} = $props()
+const modalStore = getModalStore();
 
+ // ----------- Setting the props
+ let {parent} = $props()
+ let review =  $state($modalStore[0]["props"]["review"])
+ let minor_load = $state($modalStore[0]["props"]["minor_load"])
+
+// Set the functions
+ const onApprovalToggle =  $modalStore[0]["props"]["onApprovalToggle"]
+const onDeleteMessage =  $modalStore[0]["props"]["onDeleteMessage"]
+const onMessage = $modalStore[0]["props"]["onMessage"]
+
+let ml_approve =$state(false);
+let ml_delete =$state(false);
+
+const handle_approval_load = async (id, approval) => {
+    ml_approve = true
+    const res = await onApprovalToggle(id, approval, ml_approve)
+    ml_approve = res
+}
+
+const handle_delete_load = async (id) => {
+    ml_delete = true
+    try{
+        const res = await onDeleteMessage(id)
+        ml_delete = res
+    }catch(err){
+        console.error(err)
+    }finally{
+        parent.onClose();
+    }
+}
+    
 
 </script>
 
@@ -12,12 +45,24 @@ let {review, onApprovalToggle, onDeleteMessage, onMessage} = $props()
         <StarRating rating={review.rating} />
         <div class="approval-toggle">
             <label class="switch">
+                {#if ml_approve}
+                <button type="button" class="flex justify-center items-center size-[46px] text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
+                    <span class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
+                      <span class="sr-only">
+                        <MinorLoader />
+                      </span>
+                    </span>
+                  </button>
+                {:else}
+               
                 <input 
                     type="checkbox" 
                     checked={review.approved}
-                    onchange={(e) => onApprovalToggle(review._id, e.target.checked)}
+                    onchange={(e) => handle_approval_load(review._id, e.target.checked)}
                 />
                 <span class="slider"></span>
+                
+                {/if}
             </label>
         </div>
     </div>
@@ -42,11 +87,15 @@ let {review, onApprovalToggle, onDeleteMessage, onMessage} = $props()
             <button class="icon-button" onclick={() => onMessage(review._id)}>
                 📧 Message Client
             </button>
-            <button class="link-button" onclick={() => expanded = !expanded}>
+            <button class="link-button" onclick={parent.onClose}>
                 Close Review
             </button>
-            <button class="delete-button" onclick={() => onDeleteMessage(review._id)}>
-                Delete
+            <button class="delete-button" disabled={ml_delete} onclick={() => handle_delete_load(review._id)}>
+                {#if ml_delete}
+                    <MinorLoader />
+                {:else}
+                    Delete
+                {/if}
             </button>
         </div>
     </div>
@@ -229,4 +278,5 @@ let {review, onApprovalToggle, onDeleteMessage, onMessage} = $props()
     button:active {
         transform: scale(0.98);
     }
+  
 </style>

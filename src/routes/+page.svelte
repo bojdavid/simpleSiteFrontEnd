@@ -6,3 +6,10 @@
 </script>
 
 <Card />
+<ol>
+
+      <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/dashboard/bio">About</a></li>
+        <li><a href="/dashboard/services">Services</a></li>
+        <li><a href="/dashboard/review">Review</a></li>
+</ol>

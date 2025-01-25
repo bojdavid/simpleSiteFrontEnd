@@ -1,6 +1,5 @@
 <script lang="ts">
     import UploadImage from '../UploadImage.svelte';
-    import MinorLoader from '../Minor_loader.svelte';
 
 	// Stores
 	import { getModalStore } from '@skeletonlabs/skeleton';
@@ -9,19 +8,13 @@
     // ----------- Setting the props
     let { parent} = $props();
 
-    let service = $state($modalStore[0]["props"]["service"])
-    console.log("Service image -------- ",service.image)
-
-    const onupdateService =  $modalStore[0]["props"]["onupdateService"]
-
-    const ondeleteService =  $modalStore[0]["props"]["ondeleteService"]
-
-
-    let ml_update = $state(false)
-
-	// We've created a custom submit function to pass the response and close the modal.
-	async function onFormSubmit() {
-        ml_update = true
+    
+    const onsubmitService =  $modalStore[0]["props"]["submitService"]
+    
+    
+    // We've created a custom submit function to pass the response and close the modal.
+/*
+    function onFormSubmit() {
         // Form Data
 	    const formData = {
             ...service,
@@ -30,25 +23,20 @@
             isApproved: service['isApproved'],
             image: service['image']
 	    };
-		
-
-        try{
-            const res = await onupdateService(formData)
-            ml_update = res
-        }catch (err){
-            console.error("Error from onupdateService: ", err)
-        }finally{
-            modalStore.close();
-        }
-
-
+		if ($modalStore[0].response) $modalStore[0].response(formData);
+        console.log(formData)
+		modalStore.close();
 	}
-
+*/
 	// Base Classes
 	const cBase = 'card p-4 w-modal shadow-xl space-y-4';
 	const cHeader = 'text-2xl font-bold';
 	const cForm = 'border border-surface-500 p-4 space-y-4 rounded-container-token';
 
+    let isApproved = $state(true);
+    let image = $state();
+    let description = $state()
+    let service_name =$state()
     </script>
 
 <!-- @component This example creates a simple form modal. -->
@@ -56,9 +44,9 @@
 {#if $modalStore[0]}
 	<div class="modal-example-form {cBase}">
 		<header class="flex justify-between px-1{cHeader}">
-            <div class="date">{service.updated_at}</div>
+            <div class="date"> data goes here </div>
             <div class="approval-status">
-                <input type="checkbox" name="isApproved" id="isApproved" bind:checked={service.isApproved} />
+                <input type="checkbox" name="isApproved" id="isApproved" bind:checked={isApproved} />
             </div>
         </header>
 		<!-- Enable for debugging: -->
@@ -71,17 +59,17 @@
                 </div>
                 
                
-                <UploadImage bind:profile={service.image}/>
+                <UploadImage bind:profile={image}/>
                 
         
                 <div class="">
                     <input class="mt-1 p-2 border border-gray-300 rounded-md w-full
                                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                                sm:text-sm" type="text" bind:value={service.service} name="serviceName"/>
+                                sm:text-sm" type="text" bind:value={service_name} name="serviceName"/>
                     <textarea class="mt-1 p-2 border border-gray-300 rounded-md w-full
                                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                                 sm:text-sm " 
-                                name="description" bind:value={service.description}>  </textarea>
+                                name="description" bind:value={description}>  </textarea>
                 </div>
             </div>
 <!--
@@ -90,13 +78,8 @@
 		</form>
 		<!-- prettier-ignore -->
 		<footer class="modal-footer {parent.regionFooter} justify-evenly">
-            <button class="btn {parent.buttonNeutral} bg-red-500"  onclick={() => ondeleteService(service._id)}>Delete Service</button>
-			<button class="btn {parent.buttonNeutral}" onclick={parent.onClose}>{parent.buttonTextCancel}</button>
-            {#if ml_update}
-                <MinorLoader />
-            {:else}
-			    <button class="btn {parent.buttonPositive}" onclick={onFormSubmit}> Update Service</button>
-            {/if}
+            <button class="btn {parent.buttonNeutral}" onclick={parent.onClose}>{parent.buttonTextCancel}</button>
+			<button class="btn {parent.buttonPositive}" onclick={() => onsubmitService()}> Update Service</button>
 		</footer>
 	</div>
 {/if}

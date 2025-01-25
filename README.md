@@ -13,6 +13,9 @@ I also used cookies to store the jwt token and stores to store the data in the t
 
 thats all for now. I think.
 
+Don't forget to Include the MIT License in your project
+Site is not responsive as of this moment
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).

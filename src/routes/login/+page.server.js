@@ -62,7 +62,6 @@ export const actions = {
         
 
         try {
-            console.log(process.env.URL)
             const response = await fetch(`${PUBLIC_API_URL}adminAuth/login/`, {
                 method: 'POST',
                 headers: {

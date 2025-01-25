@@ -1,45 +1,45 @@
 <script>
+    import { getModalStore } from '@skeletonlabs/skeleton';
     import ExpandedServiceCard from './expandedServiceCard.svelte';
 
     let { service, onupdateService, ondeleteService } = $props();
-    let expanded = $state();
 
-    function handlePopoverClick(event) {
-    event.stopPropagation();
-  }
+const modalStore = getModalStore();
+const modal = {
+	type: 'component',
+	component: 'ExpandedServiceCard',
+    props: {service, ondeleteService, onupdateService},
+    title: "Service Handling",
+    body : "lorem ispum"
+};
+
+const triggerModal =() =>{
+    modalStore.trigger(modal);
+}
 
 </script>
 
-
-<div>
-    {#if expanded}
-    <div class="overlay" on:click={() => expanded = false}>
-        <div class="popover" on:click|stopPropagation>
-            <ExpandedServiceCard service={service} {onupdateService} {ondeleteService}/>
-        </div>
-    </div>
-    {/if}
-</div>
-
-<div class="service-card" on:click={() => expanded = !expanded} role="button" tabindex="0">
-    <div class="card-content">
-        <div class="service-info">
-            <p class="service-name">{service.service}</p>
-            <div class="service-meta">
-                <div class="image-container">
-                    <span>📷</span>
-                </div>
-                <div class="approval-status" class:approved={service.isApproved}>
-                    {#if service.isApproved}
-                        <p>✓ Approved</p>
-                    {:else}
-                        <p>⏳ Pending</p>
-                    {/if}
+<button onclick={triggerModal}>
+    <div class="service-card">
+        <div class="card-content">
+            <div class="service-info">
+                <p class="service-name">{service.service}</p>
+                <div class="service-meta">
+                    <div class="image-container">
+                        <span>📷</span>
+                    </div>
+                    <div class="approval-status" class:approved={service.isApproved}>
+                        {#if service.isApproved}
+                            <p>✓ Approved</p>
+                        {:else}
+                            <p>⏳ Pending</p>
+                        {/if}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</button>
 
 <style>
     .service-card {
@@ -135,42 +135,5 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        animation: fadeIn 0.2s ease;
-    }
-
-    .popover {
-        width: fit-content;
-        max-height: 90vh;
-        animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-        from { 
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to { 
-            opacity: 1;
-            transform: translateY(0);
-        }
     }
 </style>

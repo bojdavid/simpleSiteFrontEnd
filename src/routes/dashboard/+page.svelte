@@ -12,7 +12,6 @@ let {data} = $props()
       profilePicture: "",
       id: data.user.userId         
   })
-
   let userName = $user.name;
   let profilePicture = "";
 
@@ -22,7 +21,7 @@ let {data} = $props()
             // Fetch once at parent level
             const [servicesRes, reviewsRes] = await Promise.all([
                 fetch(`${PUBLIC_API_URL}services/`),
-                fetch(`${PUBLIC_API_URL}review/`)
+                fetch(`${PUBLIC_API_URL}review/user/${$user.id}`)
             ]);
             // Check response status
             if (!servicesRes.ok || !reviewsRes.ok) {
@@ -58,33 +57,33 @@ let {data} = $props()
 console.log("Here--------",$stats)
 </script> 
 
-<div class="dashboard">
-  <header class="welcome-section">
-    <h1>Welcome, {userName}</h1>
+<div class="dashboard bg-green-100 min-h-screen p-6">
+  <header class="welcome-section bg-white shadow-md rounded-lg p-5 mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Welcome, {userName}</h1>
     
-    <div class="profile-picture-container">
-      <div class="profile-picture">
-        <!-- <img src="" alt="Profile Picture" /> -->
-        <span class="placeholder">Image</span>
+    <div class="profile-picture-container flex items-center mt-4">
+      <div class="profile-picture w-16 h-16 rounded-full border-2 border-gray-300 flex items-center justify-center overflow-hidden">
+        <!-- <img src="" alt="Profile Picture" class="w-full h-full object-cover" /> -->
+        <span class="placeholder text-gray-500">Image</span>
       </div>
     </div>
   </header>
 
-  <h2>Edit Your Sections</h2>
+  <h2 class="text-xl font-semibold mb-4">Edit Your Sections</h2>
 
-  <div class="stats-container">
+  <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
     {#if stats}
         {#each Object.entries($stats) as [category, data]}
-            <div class="stat-card">
-                <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
-                <div class="stat-numbers">
-                    <div class="stat-box">
-                        <span class="number">{data.pending}</span>
-                        <span class="label">Pending</span>
+            <div class="stat-card bg-white shadow-lg rounded-lg p-5 flex flex-col">
+                <h3 class="text-lg font-semibold text-gray-700">{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                <div class="stat-numbers flex-grow mt-3">
+                    <div class="stat-box bg-green-200 p-4 rounded-lg mb-2 flex flex-col items-center">
+                        <span class="number text-2xl font-bold text-green-800">{data.pending}</span>
+                        <span class="label text-sm text-gray-600">Pending</span>
                     </div>
-                    <div class="stat-box">
-                        <span class="number">{data.total}</span>
-                        <span class="label">Total</span>
+                    <div class="stat-box bg-green-300 p-4 rounded-lg flex flex-col items-center">
+                        <span class="number text-2xl font-bold text-green-800">{data.total}</span>
+                        <span class="label text-sm text-gray-600">Total</span>
                     </div>
                 </div>
             </div>
@@ -94,6 +93,7 @@ console.log("Here--------",$stats)
 </div>
 
 <style>
+  /*
   .dashboard {
     padding: 2rem;
     max-width: 1200px;
@@ -212,4 +212,5 @@ console.log("Here--------",$stats)
     color: #6b7280;
     font-weight: 500;
   }
+  */
 </style>

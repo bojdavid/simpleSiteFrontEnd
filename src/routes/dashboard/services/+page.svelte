@@ -1,10 +1,19 @@
-<script lang="ts">
+<script>
   
   import { onMount } from 'svelte';
   import ServiceCard from '../../../lib/components/services/ServiceCard.svelte';
   import Tabs from '$lib/components/Tabs_.svelte';
   import Loader from '$lib/components/Loader.svelte';
   import { PUBLIC_API_URL } from '$env/static/public';
+  import CreateServiceCard from '$lib/components/services/CreateServiceCard.svelte';
+  import { getModalStore } from '@skeletonlabs/skeleton';
+
+
+const modalStore = getModalStore();
+
+const triggerModal =() =>{
+    modalStore.trigger(modal);
+}
   
 
 let services = $state([]);
@@ -13,7 +22,6 @@ let error = $state(null);
 
 // Get Services data
 const refreshServices = async () =>{
-  loading = true
     const res = await fetch(`${PUBLIC_API_URL}services`)  
 
     if ( !res.ok){
@@ -36,9 +44,16 @@ onMount(async () => {
   }
 })
 
+
+//CREATE SERVICE and updatepage
+const submitService = async() =>{
+  console.log("service has been updated")
+}
+
+
 //UPDATES services and reloads the page to get fresh data
 const updateService = async (service) => {
-    loading = true;
+    let minor_loading = true;
     const formData = new FormData();
     formData.append('_id', service._id);
     formData.append("service", service.service)
@@ -62,9 +77,11 @@ const updateService = async (service) => {
         console.error("Error:", err);
         error = err;
     } finally {
-        loading = false;
+        minor_loading =false
+        return minor_loading
     }
 };
+
 
 // DELETING A SERVICE
 const deleteService = async (id) =>{
@@ -105,11 +122,23 @@ $effect(() => {
     console.log('Services from parent:', services);
 });
 
+//Modal properties
+const modal = {
+	type: 'component',
+	component: 'CreateServiceCard',
+  props: {submitService}
+};
+
 </script>
 
 <header>
   <h1>Our Services</h1>
-  <Tabs {items} active={activeTab} ontabChange={handleTabChange} />
+      <div class="flex ">
+        <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out" onclick={triggerModal}> Add Service</button> 
+        <div class="tabs">
+          <Tabs {items} active={activeTab} ontabChange={handleTabChange} />
+        </div>
+      </div>
 </header>
 
 <div class="services-grid">
@@ -171,4 +200,21 @@ $effect(() => {
         z-index: 10;
         transition: box-shadow 0.3s ease;
     }
+
+  header div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  header div button {
+    align-self: flex-start;
+  }
+
+  .tabs {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+  } 
 </style> 

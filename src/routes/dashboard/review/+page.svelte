@@ -5,17 +5,27 @@
   import Loader from '$lib/components/loader.svelte';
   import { enhance } from '$app/forms';
   import { PUBLIC_API_URL } from '$env/static/public';
+  import { user } from '$lib/stores/stats';
  
 
 //getting data
   let reviews = $state([]);
   let sortedReviews = $state([]);
   let loading = $state(true);
+  let minor_load = $state(false)
   let error = $state(null);
 
+  let userID;
+  if(!$user.id ){
+    userID = "6767b475e6a1728861903812"
+  }else{
+   // userID = user.id
+   userID = "6767b475e6a1728861903812"
+  }
 //Gets data from the server while the page is loading
   onMount(async () => {
     try {
+        
         await refreshReviews();
     } catch (err) {
         error = err;
@@ -24,11 +34,11 @@
         loading = false;
     }
   })
-
+console.log($user.id)
 // Reusable function to fetch and update reviews
 const refreshReviews = async () => {
-    const url = `${PUBLIC_API_URL}review/`; // should become an enviroment variable
-    console.log("Should become an enviroment variable")
+    //The $user.id store value refreshes and goes back to empty when the page refreshes so this throws an error
+    const url = `${PUBLIC_API_URL}review/user/${userID}`; 
     const res = await fetch(url);
     if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -38,18 +48,20 @@ const refreshReviews = async () => {
 };
 
 //Approves review and reloads the page to get fresh data
-const handleApproval = async (reviewId, checked) => {
-    loading = true;
+const handleApproval = async (reviewId, checked, ml) => {
+    
     const formData = new FormData();
     formData.append('reviewId', reviewId);
     formData.append('checked', checked);
-
+    
     try {
+        minor_load = true
+       // console.log("Minor_load ---------", ml)
         const response = await fetch('?/handleApproval', {
             method: 'POST',
             body: formData
         });
-
+        
         const result = await response.json();
         if (response.ok) {
             await refreshReviews();
@@ -60,7 +72,9 @@ const handleApproval = async (reviewId, checked) => {
         console.error("Error:", err);
         error = err;
     } finally {
-        loading = false;
+        minor_load = false;
+        ml=false;
+        return ml
     }
 };
 
@@ -72,7 +86,7 @@ function handleMessage(reviewId) {
   
 // Delete the review
 const deleteMessage = async (reviewId) => {
-    loading = true;
+    minor_load = true;
     const formData = new FormData();
     formData.append('reviewId', reviewId);
 
@@ -92,7 +106,8 @@ const deleteMessage = async (reviewId) => {
         console.error("Error:", err);
         error = err;
     } finally {
-        loading = false;
+        minor_load = false;
+        return false
     }
 };
 
@@ -139,6 +154,7 @@ function handleScroll() {
               {#each sortedReviews as review (review._id)}
                   <ReviewItem 
                   {review}
+                  {minor_load}
                   onApprovalToggle={(id, checked) => handleApproval(id, checked)}
                   onMessage={() => handleMessage(review._id)}
                   onDeleteMessage={(id) => deleteMessage(id)}
@@ -149,6 +165,7 @@ function handleScroll() {
               {#each sortedReviews.filter(review => review.approved) as review (review._id)}
                   <ReviewItem 
                   {review}
+                  {minor_load}
                   onApprovalToggle={(id, checked) => handleApproval(id, checked)}
                   onMessage={() => handleMessage(review._id)}
                   />
@@ -157,6 +174,7 @@ function handleScroll() {
               {#each sortedReviews.filter(review => !review.approved) as review (review._id)}
                   <ReviewItem 
                   {review}
+                  {minor_load}
                   onApprovalToggle={(id, checked) => handleApproval(id, checked)}
                   onMessage={() => handleMessage(review._id)}
                   />
