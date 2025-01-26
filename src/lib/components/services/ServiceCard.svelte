@@ -1,6 +1,6 @@
 <script>
     import { getModalStore } from '@skeletonlabs/skeleton';
-    import ExpandedServiceCard from './expandedServiceCard.svelte';
+    import ExpandedServiceCard from './ExpandedServiceCard.svelte';
 
     let { service, onupdateService, ondeleteService } = $props();
 
