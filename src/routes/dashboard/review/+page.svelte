@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import  ReviewItem  from '../../../lib/components/reviews/ReviewItem.svelte';
   import Tabs_ from '../../../lib/components/Tabs_.svelte';
-  import Loader from '$lib/components/loader.svelte';
+  import Loader from '$lib/components/Loader.svelte';
   import { enhance } from '$app/forms';
   import { PUBLIC_API_URL } from '$env/static/public';
   import { user } from '$lib/stores/stats';
