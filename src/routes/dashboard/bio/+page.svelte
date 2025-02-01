@@ -92,14 +92,17 @@ onMount(async () => {
     }
     
     let a =  "/favicon.png"; 
+    const bg_gradient = "bg-gradient-to-br from-primary-500 to-tertiary-500 dark:bg-gradient-to-br dark:from-primary-800 dark:to-tertiary-800"
+	
 </script>
 
-<div class="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
-    <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Bio</h1>
+<div class=" ">
+    <h1 class="text-5xl font-bold text-center my-6">Bio</h1>
     
-    <form onsubmit={handleSubmit} class="bio-form bg-gray-50 p-4 rounded-lg shadow-md">
-        
-        <UploadImage profile={a}/>
+    <form onsubmit={handleSubmit} class="bio-form shadow-md max-w-3xl w-xl mx-auto p-6  {bg_gradient}">
+        <div class="mb-9">
+            <UploadImage profile={a}/>
+        </div>
 
         <input 
             type="text" 
@@ -115,7 +118,7 @@ onMount(async () => {
             class="w-full p-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
         />
 
-        <div class="socials grid grid-cols-1 gap-4">
+        <div class="socials grid grid-cols-2 md:grid-cols-3 gap-4">
             <input 
                 type="tel" 
                 bind:value={formData.phone} 
@@ -162,7 +165,11 @@ onMount(async () => {
             />
         </div>
 
-        <button type="submit" class="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out">
+        <button type="submit" class="mt-4 w-full 
+                                     bg-secondary-500
+                                    font-semibold py-2 rounded-lg 
+                                    shadow-md hover:bg-secondary-700 
+                                    transition duration-200 ease-in-out">
             Save Bio
         </button>
     </form>

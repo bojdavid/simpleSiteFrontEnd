@@ -4,7 +4,6 @@ import { PUBLIC_API_URL } from '$env/static/public';
 export const actions = {
     updateService : async ({ request, cookies}) =>{
         const data = await request.formData();
-        console.log(Object.fromEntries(data.entries()))
         
 
         const token = cookies.get('jwt')
@@ -17,7 +16,7 @@ export const actions = {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(Object.fromEntries(data.entries()))
+                body: JSON.stringify(data)
             });
 
             if (!response.ok){

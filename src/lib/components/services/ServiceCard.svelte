@@ -19,121 +19,43 @@ const triggerModal =() =>{
 
 </script>
 
-<button onclick={triggerModal}>
-    <div class="service-card">
-        <div class="card-content">
-            <div class="service-info">
-                <p class="service-name">{service.service}</p>
-                <div class="service-meta">
-                    <div class="image-container">
-                        <span>📷</span>
-                    </div>
-                    <div class="approval-status" class:approved={service.isApproved}>
-                        {#if service.isApproved}
-                            <p>✓ Approved</p>
-                        {:else}
-                            <p>⏳ Pending</p>
-                        {/if}
-                    </div>
-                </div>
+<button onclick={triggerModal} class=" mb-5 mx-5 
+                                        border-2 border-primary-500 dark:border-primary-700 rounded-md
+                                        bg-primary-300 dark:bg-primary-900
+                                        hover:bg-primary-500
+                                        hover:scale-[1.01] hover:shadow-lg 
+                                        transition duration-300 ease-in-out"> 
+    <div class="lg:w-[850px] md:w-[550px] sm:w-[400px] w-[300px] sm:h-12 h-10
+                
+                ">
+        <div class="flex flex-row justify-between">
+            <span class="text-[9px] sm:text-[10px] mb-0 inline-block">date goes here </span>
+            <div class="sm:text-xs text-[10px] " class:approved={service.isApproved}>
+                {#if service.isApproved}
+                    <p class="bg-success-500 text-seondary-500">✓ Approved</p>
+                {:else}
+                    <p>⏳ Pending</p>
+                {/if}
             </div>
+        </div>
+
+        <div class="grid grid-cols-6 mt-[-10px] gap-1 
+                    md:text-lg sm:text-sm text-[10px] mx-2
+                    text-left">
+                <div class="text-left col-span-2">
+                    <p class="truncate overflow-hidden whitespace-nowrap">{service.service}</p>
+                </div>
+                <div class="border-x-2 border-primary-500 col-span-3 pl-3 ">
+                    <p class="truncate overflow-hidden whitespace-nowrap">{service.description}</p>
+                </div>
+                <div class="col-span-1">
+                        <span>📷</span>
+                </div>
+            
         </div>
     </div>
 </button>
 
 <style>
-    .service-card {
-        background: white;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-                    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        padding: 1.75rem;
-        border-radius: 16px;
-        width: 700px;
-        margin: 1rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid rgba(229, 231, 235, 0.5);
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .service-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-                    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-
-    .service-card:active {
-        transform: translateY(0);
-    }
-
-    .card-content {
-        display: flex;
-        align-items: center;
-    }
-
-    .service-info {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 2rem;
-    }
-
-    .service-name {
-        background-color: #f8fafc;
-        padding: 1rem 1.5rem;
-        margin: 0;
-        font-size: 1.5rem;
-        border-radius: 12px;
-        color: #1f2937;
-        font-weight: 500;
-        flex-grow: 1;
-        transition: all 0.2s ease;
-    }
-
-    .service-meta {
-        display: flex;
-        align-items: center;
-        gap: 1.5rem;
-    }
-
-    .image-container {
-        background-color: #f8fafc;
-        padding: 1rem 1.25rem;
-        border-radius: 12px;
-        text-align: center;
-        min-width: 60px;
-        font-size: 1.25rem;
-        transition: all 0.2s ease;
-    }
-
-    .image-container:hover {
-        background-color: #f1f5f9;
-    }
-
-    .approval-status {
-        background: #f3f4f6;
-        padding: 0.75rem 1.25rem;
-        border-radius: 24px;
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: #6b7280;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .approval-status.approved {
-        background: #dcfce7;
-        color: #166534;
-    }
-
-    .approval-status p {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
+  
 </style>

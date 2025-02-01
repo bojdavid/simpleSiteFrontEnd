@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+:root [data-theme='skeleton'] {
+	--theme-rounded-base: 20px;
+	--theme-rounded-container: 4px;
+}

@@ -37,10 +37,17 @@
       </div>
 
         <FileButton name="files" 
-                    button="btn variant-soft-primary"
+                    button="btn"
                     bind:files={files}
                     onchange={onChangeHandler}
-                    class="m-auto"
+                    class="m-auto 
+                        rounded-lg
+                        overflow-hidden
+                        border border-surface-500 dark:border-surface-300
+                        text-primary-900 dark:text-primary-500
+                        hover:bg-surface-500 hover:text-primary-300 dark:hover:bg-surface-200 dark:hover:text-primary-900
+                        transition duration-200
+                        "
                     >
                     
                 Upload

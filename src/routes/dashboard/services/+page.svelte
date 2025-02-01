@@ -130,91 +130,84 @@ const modal = {
 };
 
 </script>
+<div class="flex flex-col items-center justify-center my-6">
+  
+    <h1 class="text-4xl font-bold">Services</h1>
+    <div class="my-6 
+                bg-primary-500 shadow-lg
+                w-full mx-3 py-2  
+                sticky top-0 z-10 ">
 
-<header>
-  <h1>Our Services</h1>
-      <div class="flex ">
-        <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200 ease-in-out" onclick={triggerModal}> Add Service</button> 
-        <div class="tabs">
-          <Tabs {items} active={activeTab} ontabChange={handleTabChange} />
+                <div class="scale-[0.7] sm:scale-100 flex flex-row justify-between ">
+                      <button class="btn btn-sm h-9 sm:h-12
+                                      font-semibold my-2 px-4 rounded-lg
+                                      relative start-4 justify-start
+                                      border border-tertiary-500
+                                      text-primary-800 hover:dark:text-primary-400
+                                      bg-secondary-500
+                                      shadow-md dark:hover:bg-secondary-800 hover:bg-secondary-400
+                                      transition duration-300 ease-in-out" onclick={triggerModal}> + Service</button> 
+                      <div class="flex-grow flex justify-center my-auto ">
+                        <Tabs {items} active={activeTab} ontabChange={handleTabChange} />
+                      </div>
+                </div>
+    </div>
+  
+  
+  <div class="flex flex-col items-center">
+    <div class="lg:w-[850px] md:w-[550px] sm:w-[400px] 
+                  w-[300px] py-3
+                  grid grid-cols-6 gap-1 sm:text-sm text-[10px] mx-2
+                  text-center  mb-5 text-lg font-bold 
+                  bg-primary-500  shadow-lg dark:shadow-surface-600
+                  ">
+        <div class="col-span-2">
+            <p class="text-center">Service</p>
         </div>
+        <div class="border-x-2 col-span-3  ">
+            <p class="">Description</p>
+        </div>
+        <div class="col-span-1">
+                <span>Approved</span>
+        </div>
+    
       </div>
-</header>
 
-<div class="services-grid">
-    {#if loading}
-      <Loader />
-
-    {:else if error}
-      <div class="loader-container">
-        <h3>Error: {error.message}</h3>
-      </div>
-    {:else}
-        {#if activeTab === "All"}
-          
-            {#each services as service}
-              <ServiceCard service={service} 
-                onupdateService={ (s) => updateService(s)} 
-                ondeleteService = { (id)=> deleteService(id)}/>
-            {/each}
-          
-        {:else if activeTab === "Approved"}
-            {#each services.filter(service => service.isApproved) as service}
-              <ServiceCard service={service} 
-                onupdateService={ (s) => updateService(s)} 
-                ondeleteService = { (id)=> deleteService(id)}/>
-            {/each}
-          
-        {:else if activeTab === "Pending"}
-            {#each services.filter(service => !service.isApproved) as service}
-              <ServiceCard service={service} 
-                onupdateService={ (s) => updateService(s)} 
-                ondeleteService = { (id)=> deleteService(id)}/>
-            {/each}
-        {/if}
-    {/if}
+      {#if loading}
+        <Loader />
+  
+      {:else if error}
+        <div class="loader-container">
+          <h3>Error: {error.message}</h3>
+        </div>
+      {:else}
+      
+          {#if activeTab === "All"}
+            
+              {#each services as service}
+                <ServiceCard service={service} 
+                  onupdateService={ (s) => updateService(s)} 
+                  ondeleteService = { (id)=> deleteService(id)}/>
+              {/each}
+            
+          {:else if activeTab === "Approved"}
+              {#each services.filter(service => service.isApproved) as service}
+                <ServiceCard service={service} 
+                  onupdateService={ (s) => updateService(s)} 
+                  ondeleteService = { (id)=> deleteService(id)}/>
+              {/each}
+            
+          {:else if activeTab === "Pending"}
+              {#each services.filter(service => !service.isApproved) as service}
+                <ServiceCard service={service} 
+                  onupdateService={ (s) => updateService(s)} 
+                  ondeleteService = { (id)=> deleteService(id)}/>
+              {/each}
+          {/if}
+      {/if}
+  </div>
 </div>
 
 <style>
-  .services-grid {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-  }
-
-  header{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0;
-        margin: 0;
-        
-        position: sticky;
-        top: 0;
-        background-color: var(--background-color, white);
-        width: 100%;
-        padding: 1rem;
-        z-index: 10;
-        transition: box-shadow 0.3s ease;
-    }
-
-  header div {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-
-  header div button {
-    align-self: flex-start;
-  }
-
-  .tabs {
-    margin-left: auto;
-    display: flex;
-    justify-content: center;
-    flex-grow: 1;
-  } 
+  
 </style> 

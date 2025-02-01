@@ -18,11 +18,11 @@
     <p>Login</p>
     <form method="POST" use:enhance={handleSubmit}>
         <div class="user-box">
-            <input required name="email" id="email" type="text">
+            <input required name="email" id="email" type="text" value="email@email.com">
             <label for="email">Email</label>
         </div>
         <div class="user-box">
-            <input required name="password" id="password" type="password">
+            <input required name="password" id="password" type="password" value="checking">
             <label for="password">Password</label>
         </div>
         

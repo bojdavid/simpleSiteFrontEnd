@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import  ReviewItem  from '../../../lib/components/reviews/ReviewItem.svelte';
-  import Tabs_ from '../../../lib/components/Tabs_.svelte';
+  import Tabs from '../../../lib/components/Tabs_.svelte';
   import Loader from '$lib/components/Loader.svelte';
   import { enhance } from '$app/forms';
   import { PUBLIC_API_URL } from '$env/static/public';
@@ -131,12 +131,22 @@ function handleScroll() {
 
 <!-- HTML CONTENT -->
  <main>
-    <header class:scrolled={isScrolled}>
-        <h1>Client Reviews</h1>
-
-        <Tabs_  {items} active={activeTab} ontabChange={handleTabChange} />
-    </header>
+    <div class="flex flex-col items-center justify-center my-6">
+  
+        <h1 class="text-4xl font-bold">Client Reviews</h1>
+        <div class="my-6 
+                    bg-primary-500 shadow-lg
+                    w-full mx-3 py-2  
+                    sticky top-0 z-10 ">
     
+                    <div class="scale-[0.7] sm:scale-100 flex flex-row justify-between "> 
+                          <div class="flex-grow flex justify-center my-auto ">
+                            <Tabs {items} active={activeTab} ontabChange={handleTabChange} />
+                          </div>
+                    </div>
+        </div>
+    
+
     
       <div class="reviews-container">
         {#if loading}
@@ -190,37 +200,7 @@ function handleScroll() {
 
 <!-- CSS CONTENT -->
 <style>
-    main{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    header{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0;
-        margin: 0;
-        
-        position: sticky;
-        top: 0;
-        background-color: var(--background-color, white);
-        width: 100%;
-        padding: 1rem;
-        z-index: 10;
-        transition: box-shadow 0.3s ease;
-    }
-
-    header.scrolled {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .reviews-container{
-      margin: 0 auto;
-      width: 100%;
-      align-items: center;
-    }
+    
 
     .loader-container {
         position: fixed;
