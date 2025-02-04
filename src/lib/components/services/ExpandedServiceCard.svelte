@@ -46,7 +46,7 @@
 
 	// Base Classes
 	const cBase = 'p-4 w-modal shadow-xl space-y-4';
-    const bg_gradient = "bg-gradient-to-br from-primary-400 to-tertiary-400 dark:bg-gradient-to-br dark:from-primary-600 dark:to-tertiary-800"
+    const bg_gradient = "bg-primary-200 dark:bg-primary-900" //"bg-gradient-to-br from-primary-400 to-tertiary-400 dark:bg-gradient-to-br dark:from-primary-600 dark:to-tertiary-800"
 	const cHeader = 'text-2xl font-bold';
 	const cForm = 'border border-surface-500 p-4 space-y-4 rounded-container-token';
 

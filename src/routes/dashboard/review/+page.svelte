@@ -136,7 +136,7 @@ function handleScroll() {
         <h1 class="text-4xl font-bold">Client Reviews</h1>
         <div class="my-6 
                     bg-primary-500 shadow-lg
-                    w-full mx-3 py-2  
+                    w-full mx-3 py-2 sm:py-4 
                     sticky top-0 z-10 ">
     
                     <div class="scale-[0.7] sm:scale-100 flex flex-row justify-between "> 
@@ -202,15 +202,4 @@ function handleScroll() {
 <style>
     
 
-    .loader-container {
-        position: fixed;
-        top: 0;
-        left: 250px;
-        width: calc(100% - 250px);
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(255, 255, 255, 0.8);
-    }
 </style>

@@ -16,7 +16,6 @@ export function load({ cookies }) {
             // Step 1: Decode token without verification to inspect payload
             // This helps with debugging but doesn't ensure token validity
             const decodedToken = jwt.decode(token);
-            console.log("Decoded payload:", decodedToken);
             
             // Step 2: Verify token signature and expiration
             const verifiedToken = jwt.verify(
@@ -92,8 +91,8 @@ export const actions = {
                 };
             }
         } catch (error) {
-            console.log("Error type:", error.constructor.name);
-            console.log("Is redirect?", error instanceof redirect);
+            //console.log("Error type:", error.constructor.name);
+            //console.log("Is redirect?", error instanceof redirect);
             
             if (error.constructor.name === 'Redirect') {
                 console.log("Re-throwing redirect");

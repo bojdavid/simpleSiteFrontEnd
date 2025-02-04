@@ -1,5 +1,6 @@
 <script>
     import { enhance } from '$app/forms';
+    import "../../styles/app.css"
     
     export let form;
     let isSubmitting = false;
@@ -13,35 +14,37 @@
         };
     }
 </script>
-
 <div class="login-box">
-    <p>Login</p>
-    <form method="POST" use:enhance={handleSubmit}>
-        <div class="user-box">
-            <input required name="email" id="email" type="text" value="email@email.com">
-            <label for="email">Email</label>
-        </div>
-        <div class="user-box">
-            <input required name="password" id="password" type="password" value="checking">
-            <label for="password">Password</label>
-        </div>
-        
-        <button type="submit" disabled={isSubmitting}>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            {isSubmitting ? 'Logging in...' : 'Submit'}
-        </button>
-    </form>
-
-    {#if form?.message}
-        <p class="error-message" style="color: red; text-align: center; margin-top: 1rem;">
-            {form.message}
-        </p>
-    {/if}
-
-    <p>Forgot Password? <a href="/reset-password" class="a2">click here to reset</a></p>
+  <div class="bg-primary-500 p-5 mx-3 shadow-lg rounded-md">
+      <p>Login</p>
+      
+      <form method="POST" use:enhance={handleSubmit}>
+          <div class="user-box">
+              <input required name="email" id="email" type="text" value="email@email.com">
+              <label for="email">Email</label>
+          </div>
+          <div class="user-box">
+              <input required name="password" id="password" type="password" value="checking">
+              <label for="password">Password</label>
+          </div>
+          
+          <button type="submit" disabled={isSubmitting}>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {isSubmitting ? 'Logging in...' : 'Submit'}
+          </button>
+      </form>
+  
+      {#if form?.message}
+          <p class="error-message" style="color: red; text-align: center; margin-top: 1rem;">
+              {form.message}
+          </p>
+      {/if}
+  
+      <p class="text-surface-500 text-[14px]">Forgot Password? <a href="/reset-password" class="text-tertiary-100 hover:text-tertiary-300 hover:underline">click here to reset</a></p>
+  </div>
 </div>
 
 <style>
@@ -50,14 +53,13 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 400px;
-  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  min-width: 270px;
+  
   margin: 20px auto;
   transform: translate(-50%, -55%);
-  background: rgba(0,0,0,.9);
-  box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0,0,0,.6);
-  border-radius: 10px;
+
 }
 
 .login-box p:first-child {
@@ -213,21 +215,6 @@
   }
 }
 
-.login-box p:last-child {
-  color: #aaa;
-  font-size: 14px;
-}
-
-.login-box a.a2 {
-  color: #fff;
-  text-decoration: none;
-}
-
-.login-box a.a2:hover {
-  background: transparent;
-  color: #aaa;
-  border-radius: 5px;
-}
 
 /* Add this new style for the error message */
 .error-message {

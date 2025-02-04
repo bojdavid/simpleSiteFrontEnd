@@ -1,6 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, ALGORITHM } from '$env/static/private';
+import { actions } from './+page.server.js';
 
 export async function load({ cookies }) {
     const token = cookies.get('jwt');
@@ -28,4 +29,3 @@ export async function load({ cookies }) {
         throw redirect(302, '/login');
     }
 }
-

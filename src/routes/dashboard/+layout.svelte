@@ -11,6 +11,7 @@
 	
   import Sidebar from "../../lib/components/Sidebar.svelte";
   import Harmburger from "$lib/components/Harmburger.svelte";
+    import { draw } from "svelte/transition";
 
   
 
@@ -33,6 +34,29 @@ const drawerStore = getDrawerStore();
 
 const sidebar = { id: 'sidebar-1', width: 'w-[auto] ' };
 
+//Function to toggle the sidebar
+let sidebarOpen = $state(false);
+
+const toggleSidebar2 = () =>{
+  console.log("This should be falae ",sidebarOpen)
+  
+  if(sidebarOpen == false){
+    drawerStore.open(sidebar) 
+    //console.log(sidebarOpen)
+    sidebarOpen = true
+
+  }
+  else{
+    //drawerStore.close(sidebar)
+    //console.log(sidebarOpen)
+    sidebarOpen = false;
+  }
+  
+  console.log(sidebarOpen)
+  
+
+}
+
 
   //For the sidebar
   const items = [
@@ -40,29 +64,42 @@ const sidebar = { id: 'sidebar-1', width: 'w-[auto] ' };
     {"link":"/dashboard/bio", "text":"About"}, 
     {"link":"/dashboard/services", "text":"Services"},
     {"link":"/dashboard/review", "text":"Review"}, 
-    {"link":"#", "text":"Extra"}
+    {"link":"logout", "text":"Extra"}
   ]
+  const close_sidebar = () => { drawerStore.close(sidebar)}
+
+  const logout = async () =>{
+    console.log(" loggin  out")
+
+    
+  }
+
+  const bottom_el = {"link":"/logout", "action":logout, "text":"Logout"}
 </script>
 
 <Modal  components={modalRegistry}/>
-<Drawer >
+<Drawer onclick={drawerStore.close(sidebar)}>
   {#if $drawerStore.id == "sidebar-1"}
-      <Sidebar {items} />
+      <Sidebar {items} {bottom_el} {close_sidebar}/>
   {/if}
 </Drawer>
 
 <div class="layout flex flex-row">
   <!-- Mobile menu button -->
   <div class="lg:block hidden ">
-    <Sidebar {items}/>
+    <Sidebar {items} {bottom_el} {close_sidebar}/>
   </div>
 
   <main class="content w-full">
-    <button onclick={() => drawerStore.open(sidebar)} class=" absolute right-3 top-2 z-40
-                                                              lg:hidden 
-                                                              ">
-      <Harmburger />
-   </button>
+    
+      <button onclick={() => toggleSidebar2()} class=" absolute right-3 top-2 
+                                                                lg:hidden 
+                                                                transition-hidden duration-200
+                                                                ">
+           <Harmburger />
+      </button>
+    
+      
       {@render children()}
     </main>
 </div>

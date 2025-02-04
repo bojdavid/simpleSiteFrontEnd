@@ -138,16 +138,15 @@ const modal = {
                 w-full mx-3 py-2  
                 sticky top-0 z-10 ">
 
-                <div class="scale-[0.7] sm:scale-100 flex flex-row justify-between ">
-                      <button class="btn btn-sm h-9 sm:h-12
-                                      font-semibold my-2 px-4 rounded-lg
-                                      relative start-4 justify-start
-                                      border border-tertiary-500
+                <div class=" flex flex-row justify-evenly sm:justify-between  px-2">
+                      <button class=" px-3 py-2 sm:p-2 text-xs sm:text-lg
+                                      font-bold my-auto rounded-md
+                                      justify-start
+                                      border-2 border-primary-300
                                       text-primary-800 hover:dark:text-primary-400
-                                      bg-secondary-500
-                                      shadow-md dark:hover:bg-secondary-800 hover:bg-secondary-400
-                                      transition duration-300 ease-in-out" onclick={triggerModal}> + Service</button> 
-                      <div class="flex-grow flex justify-center my-auto ">
+                                      shadow-lg dark:hover:bg-primary-800 hover:bg-primary-300
+                                      transition duration-300 ease-in-out" onclick={triggerModal}> +service </button> 
+                      <div class="flex-grow flex justify-center my-auto scale-[0.8] sm:scale-100">
                         <Tabs {items} active={activeTab} ontabChange={handleTabChange} />
                       </div>
                 </div>
@@ -155,26 +154,36 @@ const modal = {
   
   
   <div class="flex flex-col items-center">
-    <div class="lg:w-[850px] md:w-[550px] sm:w-[400px] 
-                  w-[300px] py-3
-                  grid grid-cols-6 gap-1 sm:text-sm text-[10px] mx-2
-                  text-center  mb-5 text-lg font-bold 
+    <div class="lg:w-[850px] md:w-[550px] sm:w-[400px] w-[300px] py-2 sm:py-3
+                  grid grid-cols-6 gap-1 
+                  xsm:text-sm lg:text-lg text-[10px] mx-2
+                  text-center  mb-5 font-bold 
                   bg-primary-500  shadow-lg dark:shadow-surface-600
+                  transition-width duration-300
                   ">
         <div class="col-span-2">
             <p class="text-center">Service</p>
         </div>
-        <div class="border-x-2 col-span-3  ">
+        <div class="border-x-2 col-span-2  ">
             <p class="">Description</p>
         </div>
-        <div class="col-span-1">
+        <div class="col-span-2">
                 <span>Approved</span>
         </div>
     
       </div>
 
       {#if loading}
-        <Loader />
+      <section class="w-full">
+        <div class="p-4 space-y-4">
+          {#each Array(7) as _, index}
+              <div class="placeholder h-10  animate-pulse">
+                
+              </div>
+          {/each}
+          
+        </div>
+      </section>
   
       {:else if error}
         <div class="loader-container">
