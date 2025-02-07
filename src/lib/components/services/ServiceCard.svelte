@@ -23,7 +23,7 @@ const triggerModal =() =>{
                                         border-4 border-primary-500 rounded-md
                                         bg-primary-400 dark:bg-primary-700
                                         hover:bg-primary-500
-                                        hover:scale-[1.01] hover:shadow-lg  dark:hover:shadow-surface-400
+                                        hover:scale-[1.01] hover:shadow-md  dark:hover:shadow-primary-700
                                         transition duration-300 ease-in-out overflow-hidden
                                           h-17"> 
     <div class="lg:w-[700px] md:w-[550px] sm:w-[400px] w-[300px]

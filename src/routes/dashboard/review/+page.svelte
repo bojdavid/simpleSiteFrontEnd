@@ -148,11 +148,18 @@ function handleScroll() {
     
 
     
-      <div class="reviews-container">
+      <div class="lg:w-[850px] md:w-[550px] sm:w-[400px] w-[300px] py-2 sm:py-3
+                  ">
         {#if loading}
-          <div class="loader-container">
-            <Loader />
-          </div>
+            <section class="w-full">
+                <div class="p-4 space-y-4">
+                {#each Array(7) as _, index}
+                    <div class="placeholder h-10  animate-pulse">
+                    </div>
+                {/each}
+                
+                </div>
+            </section>
         
         {:else if error}
         <div class="loader-container">

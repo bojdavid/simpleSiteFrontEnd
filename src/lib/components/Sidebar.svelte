@@ -17,7 +17,7 @@
                 rounded-r-3xl">
           <div class="flex items-center justify-center 
                         h-20 
-                        shadow-md dark:shadow-surface-400">
+                        shadow-md dark:shadow-primary-700">
             <h1 class="text-3xl uppercase ">Logo</h1>
           </div>
           

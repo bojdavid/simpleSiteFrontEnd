@@ -64,7 +64,7 @@ const toggleSidebar2 = () =>{
     {"link":"/dashboard/bio", "text":"About"}, 
     {"link":"/dashboard/services", "text":"Services"},
     {"link":"/dashboard/review", "text":"Review"}, 
-    {"link":"logout", "text":"Extra"}
+    {"link":"/", "text":"Root page"}
   ]
   const close_sidebar = () => { drawerStore.close(sidebar)}
 
